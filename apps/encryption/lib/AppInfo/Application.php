@@ -128,6 +128,7 @@ class Application extends \OCP\AppFramework\App {
 		$container->registerService('Crypt',
 			function (IAppContainer $c) {
 				$server = $c->getServer();
+				'@phan-var \OC\Server $server';
 
 				if ($this->config->getAppValue('encryption', 'hsm.url', '') !== '') {
 					$this->config->setAppValue('crypto.engine', 'internal', 'hsm');
