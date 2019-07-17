@@ -65,21 +65,6 @@
 	 */
 
 	/**
-	 * ShareAttributesApi v1 registered attributes
-	 * @typedef {object} OC.Share.Types.RegisteredShareAttribute
-	 * @property {string} key
-	 * @property {bool}   default
-	 * @property {string} scope
-	 * @property {string} label
-	 * @property {string} description
-	 * @property {number[]} shareType
-	 * @property {number[]} incompatiblePermissions
-	 * @property {number[]} requiredPermissions
-	 * @property {OC.Share.Types.ShareAttribute[]} incompatibleAttributes
-	 * @deprecated shareAttributesApi v2 requires apps to extend ShareItemModel with attributes
-	 */
-
-	/**
 	 * These properties are sometimes returned by the server as strings instead
 	 * of integers, so we need to convert them accordingly...
 	 */
@@ -113,12 +98,6 @@
 		_linkShareId: null,
 
 		_linkSharesCollection: null,
-
-		/**
-		 * @type {OC.Share.Types.RegisteredShareAttribute[]} registered available share permissions for this file/folder share
-		 * @deprecated shareAttributesApi v2 requires apps to extend ShareItemModel with attributes
-		 */
-		_registeredAttributes: null,
 
 		initialize: function(attributes, options) {
 			if(!_.isUndefined(options.configModel)) {
@@ -164,26 +143,9 @@
 			options = options || {};
 			properties = _.extend({}, properties);
 
-			// Default permissions are Edit (CRUD) and Share
-			// Check if these permissions are possible
-			var defaultPermissions = OC.getCapabilities()['files_sharing']['default_permissions'] || OC.PERMISSION_ALL;
-			var possiblePermissions = OC.PERMISSION_READ;
-			if (this.updatePermissionPossible()) {
-				possiblePermissions = possiblePermissions | OC.PERMISSION_UPDATE;
-			}
-			if (this.createPermissionPossible()) {
-				possiblePermissions = possiblePermissions | OC.PERMISSION_CREATE;
-			}
-			if (this.deletePermissionPossible()) {
-				possiblePermissions = possiblePermissions | OC.PERMISSION_DELETE;
-			}
-			if (this.configModel.get('isResharingAllowed') && (this.sharePermissionPossible())) {
-				possiblePermissions = possiblePermissions | OC.PERMISSION_SHARE;
-			}
-			properties.permissions = defaultPermissions & possiblePermissions;
-
-			// Extend attributes for new share
-			properties.attributes = this._handleAddShareAttributes(properties, options);
+			// Get default permissions
+			var permissions = properties.permissions || OC.PERMISSION_ALL;
+			properties.permissions = permissions & this.getDefaultPermissions();
 
 			if (_.isUndefined(properties.path)) {
 				properties.path = this.fileInfoModel.getFullPath();
@@ -219,9 +181,6 @@
 		updateShare: function(shareId, properties, options) {
 			var self = this;
 			options = options || {};
-
-			// Extend attributes for update share
-			properties.attributes = this._handleUpdateShareAttributes(shareId, properties, options);
 
 			return $.ajax({
 				type: 'PUT',
@@ -324,6 +283,30 @@
 		 */
 		hasLinkShare: function() {
 			return this._linkSharesCollection.length > 0;
+		},
+
+		/**
+		 * @returns {number}
+		 */
+		getDefaultPermissions: function() {
+			// Default permissions are Edit (CRUD) and Share
+			// Check if these permissions are possible
+			var defaultPermissions = OC.getCapabilities()['files_sharing']['default_permissions'] || OC.PERMISSION_ALL;
+			var possiblePermissions = OC.PERMISSION_READ;
+			if (this.updatePermissionPossible()) {
+				possiblePermissions = possiblePermissions | OC.PERMISSION_UPDATE;
+			}
+			if (this.createPermissionPossible()) {
+				possiblePermissions = possiblePermissions | OC.PERMISSION_CREATE;
+			}
+			if (this.deletePermissionPossible()) {
+				possiblePermissions = possiblePermissions | OC.PERMISSION_DELETE;
+			}
+			if (this.configModel.get('isResharingAllowed') && (this.sharePermissionPossible())) {
+				possiblePermissions = possiblePermissions | OC.PERMISSION_SHARE;
+			}
+
+			return defaultPermissions & possiblePermissions;
 		},
 
 		/**
@@ -833,235 +816,7 @@
 				return [];
 			}
 			return share.attributes;
-		},
-
-		/**
-		 * @param {array} properties
-		 * @param {array} options
-		 * @returns {OC.Share.Types.ShareAttribute[]}
-		 * @private
-		 */
-		_handleAddShareAttributes: function(properties, options) {
-			/**
-			 * @deprecated ShareAttributesAPI v1 will be depreciated. ShareAttributesAPI v2 requires apps to overwrite addShare
-			 */
-			var shareAttributesV1 = [];
-			var filteredRegisteredAttributes = this._filterRegisteredAttributes(properties.permissions);
-			_.map(filteredRegisteredAttributes, function (filteredRegisteredAttribute) {
-				var isCompatible = true;
-				// Check if this attribute can be added due to its incompatible attributes
-				_.map(filteredRegisteredAttribute.incompatibleAttributes, function (incompatibleAttribute) {
-					_.map(filteredRegisteredAttributes, function (checkAttr) {
-						if (incompatibleAttribute.scope === checkAttr.scope &&
-							incompatibleAttribute.key === checkAttr.key &&
-							incompatibleAttribute.enabled === checkAttr.default) {
-							isCompatible = false;
-						}
-					});
-				});
-
-				if (isCompatible) {
-					shareAttributesV1.push({
-						scope: filteredRegisteredAttribute.scope,
-						key: filteredRegisteredAttribute.key,
-						enabled: filteredRegisteredAttribute.default
-					});
-				}
-			});
-			var shareAttributes = shareAttributesV1;
-
-			/**
-			 * ShareAttributesAPI v2
-			 */
-			var shareAttributesV2 = properties.attributes || {};
-			for(var i in shareAttributesV2) {
-				var attr = shareAttributesV2[i];
-				shareAttributes = this._updateShareAttribute(shareAttributes, attr);
-			}
-
-			return shareAttributes;
-		},
-
-		/**
-		 * @param {number} shareId
-		 * @param {array} properties
-		 * @param {array} options
-		 * @returns {OC.Share.Types.ShareAttribute[]}
-		 * @private
-		 */
-		_handleUpdateShareAttributes: function(shareId, properties, options) {
-			/**
-			 * @deprecated ShareAttributesAPI v1 will be depreciated. ShareAttributesAPI v2 requires apps to overwrite updateShare
-			 */
-			var shareAttributesV1 = [];
-			var filteredAttributes = [];
-			var filteredRegisteredAttributes = this._filterRegisteredAttributes(properties.permissions);
-			_.map(filteredRegisteredAttributes, function(filteredRegisteredAttribute) {
-				// Check if this allowed registered attribute
-				// is on the list of currently set properties,
-				// and set this attribute
-				var found = false;
-				_.map(properties.attributes, function(currentAttribute) {
-					if (currentAttribute.key === filteredRegisteredAttribute.key
-						&& currentAttribute.scope === filteredRegisteredAttribute.scope) {
-						found = true;
-						filteredAttributes.push({
-							scope : filteredRegisteredAttribute.scope,
-							key: filteredRegisteredAttribute.key,
-							incompatibleAttributes: filteredRegisteredAttribute.incompatibleAttributes,
-							enabled: currentAttribute.enabled
-						});
-					}
-				});
-
-				// Make sure allowed registered attributes which are
-				// not yet set are added. These can become available
-				// e.g. because of share permission/attr change
-				// and need to be initialized with their default value
-				if (!found) {
-					filteredAttributes.push({
-						scope : filteredRegisteredAttribute.scope,
-						key: filteredRegisteredAttribute.key,
-						incompatibleAttributes: filteredRegisteredAttribute.incompatibleAttributes,
-						enabled: filteredRegisteredAttribute.default
-					});
-				}
-			});
-
-			_.map(filteredAttributes, function(filteredAttribute) {
-				// Filter attributes by their incompatible attributes
-				var isCompatible = true;
-				// Check if this attribute can be added due to its incompatible attributes
-				_.map(filteredAttribute.incompatibleAttributes, function(incompatibleAttribute) {
-					_.map(filteredAttributes, function(checkAttr) {
-						if (incompatibleAttribute.scope === checkAttr.scope &&
-							incompatibleAttribute.key === checkAttr.key &&
-							incompatibleAttribute.enabled === checkAttr.enabled) {
-							isCompatible = false;
-						}
-					});
-				});
-
-				if (isCompatible) {
-					shareAttributesV1.push({
-						scope : filteredAttribute.scope,
-						key: filteredAttribute.key,
-						enabled: filteredAttribute.enabled
-					});
-				}
-			});
-
-			var shareAttributes = shareAttributesV1;
-
-			/**
-			 * ShareAttributesAPI v2
-			 */
-			var shareAttributesV2 = properties.attributes || {};
-			for(var i in shareAttributesV2) {
-				var attr = shareAttributesV2[i];
-				if (this.getRegisteredShareAttribute(attr.scope , attr.key)) {
-					// filter out ShareAttributesAPI v1
-					continue;
-				}
-				shareAttributes = this._updateShareAttribute(shareAttributes, attr);
-			}
-
-			return shareAttributes;
-		},
-
-		_updateShareAttribute: function(shareAttributes, attr) {
-			var exists = false;
-			for(var i in shareAttributes) {
-				if (shareAttributes[i].scope === attr.scope
-					&& shareAttributes[i].key === attr.key) {
-					shareAttributes[i] = attr;
-					exists = true;
-				}
-			}
-			if (!exists) {
-				shareAttributes.push(attr);
-			}
-
-			return shareAttributes;
-		},
-
-		/**
-		 * Filter registered attributes by current share permissions
-		 *
-		 * @param {number} permissions
-		 * @returns {OC.Share.Types.RegisteredShareAttribute[]}
-		 * @deprecated ShareAttributesAPI v1 registration will be depreciated. ShareAttributesAPI v2 requires apps to extend this class
-		 * @private
-		 */
-		_filterRegisteredAttributes: function(permissions) {
-			var filteredByPermissions = [];
-			for(var i in this._registeredAttributes) {
-				var compatible = true;
-				var attr = this._registeredAttributes[i];
-				for(var ii in attr.incompatiblePermissions) {
-					if (this._hasPermission(permissions, attr.incompatiblePermissions[ii])) {
-						compatible = false;
-					}
-				}
-				for(var ii in attr.requiredPermissions) {
-					if (!this._hasPermission(permissions, attr.requiredPermissions[ii])) {
-						compatible = false;
-					}
-				}
-
-				if (compatible) {
-					filteredByPermissions.push(attr);
-				}
-			}
-
-			return filteredByPermissions;
-		},
-
-		/**
-		 * Returns share attribute label for given attribute scope and name. If
-		 * attribute does not exist, null is returned.
-		 *
-		 * @param scope
-		 * @param key
-		 * @returns {OC.Share.Types.RegisteredShareAttribute}
-		 * @deprecated ShareAttributesAPI v1 registration will be depreciated. ShareAttributesAPI v2 requires apps to extend this class
-		 */
-		getRegisteredShareAttribute: function(scope, key) {
-			for(var i in this._registeredAttributes) {
-				if (this._registeredAttributes[i].scope === scope
-					&& this._registeredAttributes[i].key === key) {
-					return this._registeredAttributes[i];
-				}
-			}
-			return null;
-		},
-
-		/**
-		 * Apps can register default share attributes. The applications
-		 * registering share attributes are required to follow the rules:
-		 *   attribute enabled -> functionality is added (e.g. can download)
-		 *   attribute disabled -> functionality is restricted
-		 *   incompatible attribute -> functionality is ignored
-		 *
-		 * @param {OC.Share.Types.RegisteredShareAttribute} $shareAttribute
-		 * @deprecated ShareAttributesAPI v1 registration will be depreciated. ShareAttributesAPI v2 requires apps to extend this class
-		 */
-		registerShareAttribute: function($shareAttribute) {
-			// Add extra permission or update if already existing
-			var exists = false;
-			for(var i in this._registeredAttributes) {
-				if (this._registeredAttributes[i].scope === $shareAttribute.scope
-					&& this._registeredAttributes[i].key === $shareAttribute.key) {
-					this._registeredAttributes[i] = $shareAttribute;
-					exists = true;
-				}
-			}
-			if (!exists) {
-				this._registeredAttributes.push($shareAttribute);
-			}
-
 		}
-
 	});
 
 	OC.Share.ShareItemModel = ShareItemModel;

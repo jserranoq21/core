@@ -66,14 +66,6 @@
 			'</span>' +
 			'{{/if}}' +
 			'</div>' +
-			'<div class="shareAttributes"">' +
-			'{{#each shareAttributesV1}}' +
-			'<span class="shareOption">' +
-			'<input id="can-{{name}}-{{cid}}-{{shareWith}}" type="checkbox" name="{{name}}" class="attributes checkbox" {{#if isReshare}}disabled{{/if}} {{#if enabled}}checked="checked"{{/if}} data-scope="{{scope}}" data-enabled="{{enabled}}""/>' +
-			'<label for="can-{{name}}-{{cid}}-{{shareWith}}">{{label}}</label>' +
-			'</span>' +
-			'{{/each}}' +
-			'</div>' +
 			'</li>' +
 			'{{/each}}' +
 			'</ul>'
@@ -102,7 +94,6 @@
 		events: {
 			'click .unshare': 'onUnshare',
 			'click .permissions': 'onPermissionChange',
-			'click .attributes': 'onPermissionChange',
 			'click .showCruds': 'onCrudsToggle',
 			'click .mailNotification': 'onSendMailNotification'
 		},
@@ -118,49 +109,6 @@
 			this.model.on('change:shares', function() {
 				view.render();
 			});
-		},
-
-		/**
-		 * Get shareAttributesApi v1 attributes and update checkboxes
-		 * @param shareIndex
-		 * @returns {object}
-		 * @deprecated shareAttributesApi v2 requires apps to extend ShareItemModel
-		 */
-		getAttributesObject: function(shareIndex) {
-			var model = this.model;
-			var cid = this.cid;
-			var shareWith = model.getShareWith(shareIndex);
-
-			// Check if reshare, and if so disable the checkboxes
-			var isReshare = model.hasReshare();
-
-			// Returns OC.Share.Types.ShareAttribute[] which were set for this
-			// share (and stored in DB)
-			var attributes = model.getShareAttributes(shareIndex);
-
-			// Display shareAttributesV1 checkboxes (registered and with label)
-			var list = [];
-			attributes.map(function(attribute) {
-				// Display only shareAttributesApi v1 attributes ,
-				// other attributes should be handled by apps
-				var regAttr = model.getRegisteredShareAttribute(
-					attribute.scope,
-					attribute.key
-				);
-				if (regAttr && regAttr.label) {
-					list.push({
-						cid: cid,
-						isReshare: isReshare,
-						shareWith: shareWith,
-						enabled: attribute.enabled,
-						scope: attribute.scope,
-						name: attribute.key,
-						label: regAttr.label
-					});
-				}
-			});
-
-			return list;
 		},
 
 		/**
@@ -187,7 +135,6 @@
 				hasCreatePermission: this.model.hasCreatePermission(shareIndex),
 				hasUpdatePermission: this.model.hasUpdatePermission(shareIndex),
 				hasDeletePermission: this.model.hasDeletePermission(shareIndex),
-				shareAttributesV1: this.getAttributesObject(shareIndex),
 				wasMailSent: this.model.notificationMailWasSent(shareIndex),
 				shareWith: shareWith,
 				shareWithDisplayName: shareWithDisplayName,
@@ -332,27 +279,7 @@
 				permissions |= $(checkbox).data('permissions');
 			});
 
-			/**
-			 * ShareAttributesApi v1 attributes
-			 *
-		 	 * @deprecated attributes will be removed, shareAttributesApi v2 requires apps to extend ShareItemModel updateShare
-			 */
-			var attributes = [];
-			$('.attributes', $li).each(function(index, checkbox) {
-				var checked = $(checkbox).is(':checked');
-				$(checkbox).prop('enabled', checked);
-				attributes.push({
-					scope : $(checkbox).data('scope'),
-					key: $(checkbox).attr('name'),
-					enabled: checked
-				});
-			});
-
-			this.model.updateShare(
-				shareId,
-				{permissions: permissions, attributes: attributes},
-				{}
-			);
+			this.model.updateShare(shareId, { permissions: permissions }, {});
 		},
 
 		onCrudsToggle: function(event) {
