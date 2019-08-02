@@ -82,7 +82,7 @@ class DependencyAnalyzerTest extends TestCase {
 	 * @param string $maxVersion
 	 * @param string $intSize
 	 */
-	public function testPhpVersion($expectedMissing, $minVersion, $maxVersion, $intSize): void {
+	public function testPhpVersion($expectedMissing, $minVersion, $maxVersion, $intSize) {
 		$app = [
 			'dependencies' => [
 				'php' => []
@@ -108,7 +108,7 @@ class DependencyAnalyzerTest extends TestCase {
 	 * @param $expectedMissing
 	 * @param $databases
 	 */
-	public function testDatabases($expectedMissing, $databases): void {
+	public function testDatabases($expectedMissing, $databases) {
 		$app = [
 			'dependencies' => [
 			]
@@ -128,7 +128,7 @@ class DependencyAnalyzerTest extends TestCase {
 	 * @param string $expectedMissing
 	 * @param string|null $commands
 	 */
-	public function testCommand($expectedMissing, $commands): void {
+	public function testCommand($expectedMissing, $commands) {
 		$app = [
 			'dependencies' => [
 			]
@@ -147,7 +147,7 @@ class DependencyAnalyzerTest extends TestCase {
 	 * @param $expectedMissing
 	 * @param $libs
 	 */
-	public function testLibs($expectedMissing, $libs): void {
+	public function testLibs($expectedMissing, $libs) {
 		$app = [
 			'dependencies' => [
 			]
@@ -167,7 +167,7 @@ class DependencyAnalyzerTest extends TestCase {
 	 * @param $expectedMissing
 	 * @param $oss
 	 */
-	public function testOS($expectedMissing, $oss): void {
+	public function testOS($expectedMissing, $oss) {
 		$app = [
 			'dependencies' => []
 		];
@@ -186,7 +186,7 @@ class DependencyAnalyzerTest extends TestCase {
 	 * @param $expectedMissing
 	 * @param $oc
 	 */
-	public function testOC($expectedMissing, $oc): void {
+	public function testOC($expectedMissing, $oc) {
 		$app = [
 			'dependencies' => []
 		];
