@@ -49,6 +49,7 @@ class Disable extends Command {
 		$masterKeyEnabled = $this->config->getAppValue('encryption', 'useMasterKey', '');
 		if ($this->config->getAppValue('core', 'encryption_enabled', 'no') !== 'yes') {
 			$output->writeln('Encryption is already disabled');
+			return 0;
 		}
 		if ($masterKeyEnabled === '1') {
 			$this->config->setAppValue('encryption', 'useMasterKey', '');

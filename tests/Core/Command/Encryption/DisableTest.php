@@ -35,6 +35,49 @@ class DisableTest extends TestCase {
 	/** @var \Symfony\Component\Console\Command\Command */
 	protected $command;
 
+	public function dataDisable() {
+		return [
+			['yes', true, '1', 'Encryption disabled'],
+			['yes', true, '', 'Encryption disabled'],
+			['no', false, false, 'Encryption is already disabled'],
+		];
+	}
+
+	/**
+	 * @dataProvider dataDisable
+	 *
+	 * @param string $oldStatus
+	 * @param bool $isUpdating
+	 * @param bool $masterKeyEnabled
+	 * @param string $expectedString
+	 */
+	public function testDisable($oldStatus, $isUpdating, $masterKeyEnabled, $expectedString) {
+		$this->config->expects($this->exactly(2))
+			->method('getAppValue')
+			->willReturnMap([
+					['core', 'encryption_enabled', 'no', $oldStatus],
+					['encryption', 'useMasterKey', '', $masterKeyEnabled],
+				]
+			);
+
+		$this->consoleOutput->expects($this->once())
+			->method('writeln')
+			->with($this->stringContains($expectedString));
+
+		if ($isUpdating) {
+			$this->config->expects($this->exactly(2))
+				->method('setAppValue')
+				->willReturnMap([
+						['core', 'encryption_enabled', 'no', true],
+						['encryption', 'useMasterKey', '', true],
+						['encryption', 'userSpecificKey', '', true],
+					]
+				);
+		}
+
+		self::invokePrivate($this->command, 'execute', [$this->consoleInput, $this->consoleOutput]);
+	}
+
 	protected function setUp() {
 		parent::setUp();
 
@@ -46,38 +89,5 @@ class DisableTest extends TestCase {
 
 		/** @var \OCP\IConfig $config */
 		$this->command = new Disable($config);
-	}
-
-	public function dataDisable() {
-		return [
-			['yes', true, 'Encryption disabled'],
-			['no', false, 'Encryption is already disabled'],
-		];
-	}
-
-	/**
-	 * @dataProvider dataDisable
-	 *
-	 * @param string $oldStatus
-	 * @param bool $isUpdating
-	 * @param string $expectedString
-	 */
-	public function testDisable($oldStatus, $isUpdating, $expectedString) {
-		$this->config->expects($this->once())
-			->method('getAppValue')
-			->with('core', 'encryption_enabled', $this->anything())
-			->willReturn($oldStatus);
-
-		$this->consoleOutput->expects($this->once())
-			->method('writeln')
-			->with($this->stringContains($expectedString));
-
-		if ($isUpdating) {
-			$this->config->expects($this->once())
-				->method('setAppValue')
-				->with('core', 'encryption_enabled', 'no');
-		}
-
-		self::invokePrivate($this->command, 'execute', [$this->consoleInput, $this->consoleOutput]);
 	}
 }
