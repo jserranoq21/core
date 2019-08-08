@@ -91,8 +91,8 @@ steps:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 ---
 kind: pipeline
@@ -154,8 +154,8 @@ steps:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - install-dependencies
@@ -234,8 +234,8 @@ steps:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - install-dependencies
@@ -314,8 +314,8 @@ steps:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - install-dependencies
@@ -394,8 +394,8 @@ steps:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - install-dependencies
@@ -474,8 +474,8 @@ steps:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - install-dependencies
@@ -558,8 +558,8 @@ steps:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -654,8 +654,8 @@ steps:
   pull: always
   image: owncloudci/php:7.1
   commands:
-  - "curl -k -s -u user1:123456 -X MKCOL \"https://server/remote.php/webdav/new_folder\""
-  - "curl -k -s -u user1:123456 \"https://server/ocs/v2.php/apps/files_sharing/api/v1/shares\" --data \"path=/new_folder&shareType=0&permissions=15&name=new_folder&shareWith=admin\""
+  - curl -k -s -u user1:123456 -X MKCOL "https://server/remote.php/webdav/new_folder"
+  - curl -k -s -u user1:123456 "https://server/ocs/v2.php/apps/files_sharing/api/v1/shares" --data "path=/new_folder&shareType=0&permissions=15&name=new_folder&shareWith=admin"
 
 - name: owncloud-logfile
   pull: always
@@ -844,8 +844,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -954,8 +954,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -1064,8 +1064,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -1174,8 +1174,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -1272,8 +1272,8 @@ steps:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -1379,8 +1379,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -1486,8 +1486,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -1593,8 +1593,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -1699,8 +1699,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -1803,8 +1803,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -1901,8 +1901,8 @@ steps:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -2008,8 +2008,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -2106,8 +2106,8 @@ steps:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -2213,8 +2213,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -2323,8 +2323,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -2433,8 +2433,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -2532,8 +2532,8 @@ steps:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -2657,8 +2657,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -2798,8 +2798,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -2939,8 +2939,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -3080,8 +3080,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -3221,8 +3221,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -3362,8 +3362,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -3503,8 +3503,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -3644,8 +3644,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -3785,8 +3785,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -3926,8 +3926,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -4067,8 +4067,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -4208,8 +4208,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -4349,8 +4349,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -4490,8 +4490,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -4631,8 +4631,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -4772,8 +4772,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -4913,8 +4913,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -5054,8 +5054,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -5207,8 +5207,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -5348,8 +5348,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -5489,8 +5489,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -5630,8 +5630,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -5771,8 +5771,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -5912,8 +5912,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -6053,8 +6053,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -6194,8 +6194,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -6335,8 +6335,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -6476,8 +6476,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -6618,8 +6618,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -6760,8 +6760,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -6906,8 +6906,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -7048,8 +7048,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -7190,8 +7190,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -7342,8 +7342,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -7494,8 +7494,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -7642,8 +7642,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -7790,8 +7790,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -7938,8 +7938,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -8090,8 +8090,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -8238,8 +8238,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -8390,8 +8390,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -8538,8 +8538,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -8686,8 +8686,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -8834,8 +8834,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -8982,8 +8982,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -9130,8 +9130,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -9252,7 +9252,7 @@ steps:
   - php occ config:system:set trusted_domains 2 --value=federated
   - php occ log:manage --level 2
   - php occ config:list
-  - "echo \"export TEST_SERVER_FED_URL=http://federated\" > /drone/saved-settings.sh"
+  - echo "export TEST_SERVER_FED_URL=http://federated" > /drone/saved-settings.sh
   - php occ security:certificates:import /drone/server.crt
   - php occ security:certificates:import /drone/federated.crt
   - php occ security:certificates
@@ -9332,8 +9332,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -9484,8 +9484,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -9636,8 +9636,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -9800,8 +9800,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -9952,8 +9952,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -10100,8 +10100,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -10248,8 +10248,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -10396,8 +10396,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -10544,8 +10544,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -10692,8 +10692,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -10844,8 +10844,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -10996,8 +10996,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -11148,8 +11148,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -11300,8 +11300,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -11455,8 +11455,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -11610,8 +11610,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -11765,8 +11765,8 @@ services:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
-  - "refs/pull/**"
+  - refs/tags/**
+  - refs/pull/**
 
 depends_on:
 - coding-standard
@@ -11795,7 +11795,7 @@ steps:
 trigger:
   ref:
   - refs/heads/drone-jsonnet
-  - "refs/tags/**"
+  - refs/tags/**
   status:
   - failure
 
