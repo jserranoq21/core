@@ -335,7 +335,10 @@ class Directory extends Node implements ICollection, IQuota, IMoveTarget {
 	 * @throws SabreForbidden
 	 */
 	public function delete() {
-		if ($this->path === '' || $this->path === '/' || !$this->info->isDeletable()) {
+		if ($this->path === '' ||
+			$this->path === '/' ||
+			!$this->info->isDeletable() ||
+			(\OC::$server->getConfig()->getSystemValue('share_folder', '/') === $this->path)) {
 			throw new SabreForbidden();
 		}
 

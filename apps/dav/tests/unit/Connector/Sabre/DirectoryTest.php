@@ -85,6 +85,11 @@ class DirectoryTest extends \Test\TestCase {
 			->will($this->returnValue(true));
 	}
 
+	protected function tearDown() {
+		parent::tearDown();
+		\OC::$server->getConfig()->deleteSystemValue('share_folder');
+	}
+
 	private function getDir($path = '/') {
 		$this->view->expects($this->once())
 			->method('getRelativePath')
@@ -172,6 +177,15 @@ class DirectoryTest extends \Test\TestCase {
 			->will($this->returnValue(true));
 
 		$dir = $this->getDir('sub');
+		$dir->delete();
+	}
+
+	/**
+	 * @expectedException  \Sabre\DAV\Exception\Forbidden
+	 */
+	public function testDeleteShareFolderNotAllowed() {
+		\OC::$server->getConfig()->setSystemValue('share_folder', '/MyTestShareFolder');
+		$dir = $this->getDir('/MyTestShareFolder');
 		$dir->delete();
 	}
 

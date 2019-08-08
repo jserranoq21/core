@@ -2670,4 +2670,12 @@ class ViewTest extends TestCase {
 		$result = $view->fopen('unexist.txt', 'r');
 		$this->assertFalse($result);
 	}
+
+	public function testDeleteShareFolder() {
+		\OC::$server->getConfig()->setSystemValue('share_folder', '/MyTestSharedFolder');
+		$view = new View('/' . $this->user . '/files');
+		$view->mkdir(\OC::$server->getConfig()->getSystemValue('share_folder', '/'));
+		$this->assertFalse($view->rmdir('/MyTestSharedFolder'));
+		\OC::$server->getConfig()->deleteSystemValue('share_folder');
+	}
 }
